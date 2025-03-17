@@ -24,8 +24,7 @@ func ManagePage() {
 		userMsg := c.DefaultPostForm("message", "")
 		responseOfAI := ManageAI(roleMessage, characterInfo, userMsg)
 		c.JSON(http.StatusOK, gin.H{
-			"conversation": responseOfAI,
-			"action":       "", // action(캐릭터의 행동)까지는 아직 사용 안함.
+			"conversation": responseOfAI, // action(캐릭터의 행동)도 따로 처리해야하는줄 알았는데 그냥 AI가 대화에서 **은 행동으로 처리해줌.
 		})
 	})
 	r.Run(":3000")
