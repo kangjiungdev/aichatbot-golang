@@ -72,7 +72,7 @@ body {
 }
 
 /* 버튼 스타일 */
-button {
+#chat-enter-button {
     padding: 12px 15px;
     margin-left: 5px;
     border: none;
@@ -80,12 +80,7 @@ button {
     color: white;
     font-size: 16px;
     border-radius: 5px;
-    cursor: pointer;
     transition: background 0.3s ease;
-}
-
-button:hover {
-    background-color: #ADB5BD;
 }
 
 .chat-span {

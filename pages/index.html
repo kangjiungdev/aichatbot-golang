@@ -10,7 +10,9 @@
     <div id="chat-box"></div>
     <form action="/getResponseAI" method="post" id="chat-form">
         <input type="text" name="message" id="chat-input" placeholder="대사를 입력하세요. 예) 안녕! 뭐해?" autocomplete='off' >
-        <button>입력</button>
+        <input type="text" name="role-of-ai" id="role-input" placeholder="AI의 역할을 정하세요. 예) 학교선배 직장상사" autocomplete="off">
+        <input type="text" name="info-of-ai" id="info-input" placeholder="AI의 정보를 입력하세요. 예) 게임을 좋아한다" autocomplete="off">
+        <button id="chat-enter-button">입력</button>
     </form>
     <script src="/scripts/managePage.js"></script>
 </body>

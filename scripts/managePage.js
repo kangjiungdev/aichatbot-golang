@@ -1,19 +1,27 @@
 const chatForm = document.getElementById("chat-form")
 const chatInput = document.getElementById("chat-input")
 const chatBox = document.getElementById("chat-box")
+const chatEnterButton = document.getElementById("chat-enter-button")
+const roleInput = document.getElementById("role-input")
+const infoInput = document.getElementById("info-input")
 
 chatForm.addEventListener("submit", async(event) => {
     event.preventDefault();
 
-    const inputValue = chatInput.value
+    const roleInputValue = roleInput.value.trim()
+    const infoInputValue = infoInput.value.trim()
+    const chatInputValue = chatInput.value.trim()
 
-    if (inputValue.trim() === "") {
+    if (chatInputValue === "" || roleInputValue === "" || infoInputValue === "") {
         return
     }
 
-    createChatBlock(`User: ${inputValue}`, "User")
+    roleInput.value = roleInputValue
+    infoInput.value = infoInputValue
+    chatInput.value = chatInputValue
 
-    
+    createChatBlock(`User: ${chatInputValue}`, "User")
+
     const chatFormForAI = new FormData(chatForm);
     chatInput.value=""
 
@@ -23,7 +31,7 @@ chatForm.addEventListener("submit", async(event) => {
                 body: chatFormForAI
             })
         const JsonOfResponse =  await ResponseOfAI.json()
-        createChatBlock(`AI: ${JsonOfResponse["conversation"]}`, "AI")
+        createChatBlock(`${roleInputValue}(AI): ${JsonOfResponse["conversation"]}`, "AI")
         } catch(e) {
             console.error(e)
         }
@@ -50,3 +58,15 @@ function scrollToBottom() {
 }
 
 window.addEventListener('load', scrollToBottom);
+
+chatEnterButton.addEventListener("mouseover", function() {
+    if(chatInput.value.trim() === "" || roleInput.value.trim() === "" || infoInput.value.trim() === "") {
+        this.style = "cursor: auto;"
+    } else {
+        this.style="background-color: #ADB5BD; cursor: pointer;"
+    }
+})
+
+chatEnterButton.addEventListener("mouseout", function() {
+    this.style = "background-color: #6C757D;"
+})
