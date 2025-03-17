@@ -1,0 +1,93 @@
+/* 전체 페이지 스타일 */
+body {
+    background-color: #343A40; /* 배경색 */
+    color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* 채팅 박스 */
+#chat-box {
+    width: 80%;
+    max-width: 600px;
+    min-height: 300px;
+    padding: 15px;
+    border: none;
+    background-color: #343A40; /* 채팅 박스 색 조정 */
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+/* AI 대화 메시지 (하얀색) */
+.ai-conversation-chat {
+    color: white;
+    padding: 5px;
+}
+
+/* AI 액션 메시지 (노란색) */
+.ai-action-chat {
+    color: yellow;
+    padding: 5px;
+}
+
+/* 사용자 대화 메시지 (파란색) */
+.user-conversation-chat {
+    color: #7B86EB;
+    padding: 5px;
+}
+
+/* 사용자 액션 메시지 (회색) */
+.user-action-chat {
+    color: #B0B0B0;
+    padding: 5px;
+}
+
+/* 입력 폼 스타일 */
+#chat-form {
+    display: flex;
+    width: 80%;
+    max-width: 600px;
+}
+
+/* 입력창 스타일 (이미지 스타일과 유사하게) */
+#chat-input {
+    flex-grow: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #2D2D2D; /* 입력창 색상 조정 */
+    color: white;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#chat-input::placeholder {
+    color: #B0B0B0;
+}
+
+/* 버튼 스타일 */
+button {
+    padding: 12px 15px;
+    margin-left: 5px;
+    border: none;
+    background-color: #6C757D; /* 버튼 색상 조정 */
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background-color: #ADB5BD;
+}
+
+.chat-span {
+    display: block;
+}
