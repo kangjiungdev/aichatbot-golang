@@ -1,3 +1,3 @@
 # AI ChatBot Golang
 
-Practice making AI Chatbot
+Practice Using AI API

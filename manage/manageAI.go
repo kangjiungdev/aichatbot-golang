@@ -34,7 +34,7 @@ func ManageAI(role, info, msg string) string {
 		log.Fatal("ANTHROPIC_API_KEY 환경 변수가 설정되지 않았습니다.")
 	}
 	client := anthropic.NewClient(
-		option.WithAPIKey(apiKey), // defaults to os.LookupEnv("ANTHROPIC_API_KEY")
+		option.WithAPIKey(apiKey),
 	)
 	msgJson := MessageJson{
 		PreviousConversation: allChatWithAI,
