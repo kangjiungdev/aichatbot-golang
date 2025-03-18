@@ -31,6 +31,7 @@ window.addEventListener("load", async() => {
                 }
             });
         }
+        scrollToBottom();
 })
 
 chatForm.addEventListener("submit", async(event) => {
@@ -54,7 +55,8 @@ chatForm.addEventListener("submit", async(event) => {
     myNameInput.value = myNameInputValue
     myInfoInput.value = myInfoInputValue
 
-    createChatBlock(chatInputValue, "User")
+    createChatBlock(chatInputValue, "User");
+    scrollToBottom();
 
     const chatFormForAI = new FormData(chatForm);
     chatInput.value=""
@@ -98,7 +100,6 @@ function createChatBlock(chatContents, who) {
     })
     chatBlock.classList.add("chat-block-div")
     chatBox.appendChild(chatBlock)
-    scrollToBottom()
 }
 
 function actionChat(chatContents) {

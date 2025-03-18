@@ -105,5 +105,7 @@ body {
     margin-bottom: 2.2vw; /* 기존보다 살짝 더 여백 증가 */
 }
 
-.chat-span {
+.ai-action-chat, .ai-conversation-chat {
+    display: block; /* 줄 바꿈 강제 적용 */
+    margin-bottom: 1vw; /* 간격 추가 */
 }

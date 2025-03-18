@@ -3,8 +3,6 @@ function scrollToBottom() {
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-window.addEventListener('load', scrollToBottom);
-
 chatEnterButton.addEventListener("mouseover", function() {
     if(chatInput.value.trim() === "" || characterNameInput.value.trim() === "" || infoOfCharacterInput.value.trim() === "") {
         this.style = "cursor: auto;"

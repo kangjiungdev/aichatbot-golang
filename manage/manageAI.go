@@ -58,7 +58,6 @@ func ManageAI(msgInfo contentForAI) string {
 	})
 	allChatWithAI.ChatOfUser = append(allChatWithAI.ChatOfUser, msgInfo.UserMsg)
 	allChatWithAI.ChatOfAI = append(allChatWithAI.ChatOfAI, message.Content[0].Text)
-	fmt.Println(string(jsonValue))
 	checkErr(err, "")
 	/*
 		현재 ai api 전부 다 구려서 역할같은거 설정이나 전 대화 내용 기억을 못함.
