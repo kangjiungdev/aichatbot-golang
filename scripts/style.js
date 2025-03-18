@@ -9,10 +9,10 @@ chatEnterButton.addEventListener("mouseover", function() {
     if(chatInput.value.trim() === "" || characterNameInput.value.trim() === "" || infoOfCharacterInput.value.trim() === "") {
         this.style = "cursor: auto;"
     } else {
-        this.style="background-color: #ADB5BD; cursor: pointer;"
+        this.style="background-color: #666666; cursor: pointer;"
     }
 })
 
 chatEnterButton.addEventListener("mouseout", function() {
-    this.style = "background-color: #6C757D;"
+    this.style = "background-color: #444;"
 })
