@@ -5,7 +5,7 @@ const chatEnterButton = document.getElementById("chat-enter-button")
 const characterNameInput = document.getElementById("character-name-input")
 const infoOfCharacterInput = document.getElementById("character-info-input")
 const worldViewInput = document.getElementById("world-view-input")
-const myNameInput = document.getElementById("my-name-input")
+const myNameInput = document.getElementById("my-name-input") // name input에 * 못넣게 설정해야함
 const myInfoInput = document.getElementById("my-info-input")
 const textarea = document.querySelectorAll(".chat-form-textarea")
 
@@ -15,8 +15,8 @@ window.addEventListener("load", async() => {
     storageGetItem(characterNameInput, "character_name")
     storageGetItem(infoOfCharacterInput, "character_info")
     storageGetItem(worldViewInput, "world_view")
-        const sendNoSpanReq = await fetch("/loadConversation", {method: "POST"})
-        const allChatWithAI = await sendNoSpanReq.json()
+        const sendNoChatDivReq = await fetch("/loadConversation", {method: "POST"})
+        const allChatWithAI = await sendNoChatDivReq.json()
         if (allChatWithAI.all_chat_with_ai !== "None") {
             let allChat = []
             for(let i = 0; i < allChatWithAI.all_chat_with_ai.ChatOfUser.length; i++) {
@@ -25,9 +25,9 @@ window.addEventListener("load", async() => {
             }
             allChat.forEach(chat => {
                 if(chat.user) {
-                    createChatBlock(`${myNameInput.value}(User): ${chat.user}`, "User")
+                    createChatBlock(chat.user, "User")
                 } else {
-                    createChatBlock(`${characterNameInput.value}(AI): ${chat.ai}`, "AI")
+                    createChatBlock(chat.ai, "AI")
                 }
             });
         }
@@ -54,7 +54,7 @@ chatForm.addEventListener("submit", async(event) => {
     myNameInput.value = myNameInputValue
     myInfoInput.value = myInfoInputValue
 
-    createChatBlock(`${myNameInputValue}(User): ${chatInputValue}`, "User")
+    createChatBlock(chatInputValue, "User")
 
     const chatFormForAI = new FormData(chatForm);
     chatInput.value=""
@@ -65,25 +65,59 @@ chatForm.addEventListener("submit", async(event) => {
                 body: chatFormForAI
             })
         const JsonOfResponse =  await ResponseOfAI.json()
-        createChatBlock(`${characterNameInputValue}(AI): ${JsonOfResponse["conversation"]}`, "AI")
+        createChatBlock(JsonOfResponse["conversation"], "AI")
         } catch(e) {
             console.error(e)
         }
 })
 
 function createChatBlock(chatContents, who) {
-    const chatBlock = document.createElement("span");
-    chatBlock.innerText = chatContents
-    if (who === "User") {
-        chatBlock.classList.add("user-conversation-chat")
-    } else {
-        chatBlock.classList.add("ai-conversation-chat")
-    }
-    chatBlock.classList.add("chat-span")
+    const chatBlock = document.createElement("div");
+    checkAction = actionChat(chatContents)
+    checkAction.forEach((object) => {
+        const chatSpan = document.createElement("span")
+        if(object.word) {
+            chatSpan.innerText = object.word
+            if (who === "User") {
+                chatSpan.classList.add("user-conversation-chat")
+            } else {
+                chatSpan.classList.add("ai-conversation-chat")
+                chatBlock.classList.add("ai-chat-block-div")
+            }
+        } else {
+            chatSpan.innerText = object.act
+            if (who === "User") {
+                chatSpan.classList.add("user-action-chat")
+            } else {
+                chatSpan.classList.add("ai-action-chat")
+                chatBlock.classList.add("ai-chat-block-div")
+            }
+        }
+        chatSpan.classList.add("chat-span")
+        chatBlock.appendChild(chatSpan)
+    })
+    chatBlock.classList.add("chat-block-div")
     chatBox.appendChild(chatBlock)
     scrollToBottom()
 }
 
+function actionChat(chatContents) {
+    const regex = /\*([^*]+)\*|([^*]+)/g;
+
+    let txtArray = [];
+    let match;
+    
+    while ((match = regex.exec(chatContents)) !== null) {
+      if (match[1]) {
+        // *로 감싸인 부분은 act로 저장
+        txtArray.push({ act: match[1] });
+      } else if (match[2]) {
+        // *로 감싸지 않은 부분은 word로 저장
+        txtArray.push({ word: match[2] });
+      }
+    }
+    return txtArray
+}
 
 textarea.forEach(element => {
     element.addEventListener("keydown", (event) => {
