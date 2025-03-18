@@ -6,7 +6,7 @@ function scrollToBottom() {
 window.addEventListener('load', scrollToBottom);
 
 chatEnterButton.addEventListener("mouseover", function() {
-    if(chatInput.value.trim() === "" || roleInput.value.trim() === "" || infoInput.value.trim() === "") {
+    if(chatInput.value.trim() === "" || characterNameInput.value.trim() === "" || infoOfCharacterInput.value.trim() === "") {
         this.style = "cursor: auto;"
     } else {
         this.style="background-color: #ADB5BD; cursor: pointer;"

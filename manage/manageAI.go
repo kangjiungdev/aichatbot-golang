@@ -14,9 +14,12 @@ import (
 
 type MessageJson struct {
 	PreviousConversation SaveChat `json:"previous_conversation"`
-	Role                 string   `json:"role"`
-	Information          string   `json:"info"`
+	MyName               string   `json:"my_name"`
+	MyInfo               string   `json:"my_info"`
+	CharacterName        string   `json:"character_name"`
+	CharacterInfo        string   `json:"character_info"`
 	Message              string   `json:"message"`
+	WorldView            string   `json:"world_view"`
 }
 
 type SaveChat struct {
@@ -26,7 +29,7 @@ type SaveChat struct {
 
 var allChatWithAI = SaveChat{ChatOfUser: []string{}, ChatOfAI: []string{}}
 
-func ManageAI(role, info, msg string) string {
+func ManageAI(msgInfo contentForAI) string {
 	err := godotenv.Load()
 	checkErr(err, ".env 파일 로드 오류")
 	apiKey := os.Getenv("ANTHROPIC_API_KEY")
@@ -38,9 +41,12 @@ func ManageAI(role, info, msg string) string {
 	)
 	msgJson := MessageJson{
 		PreviousConversation: allChatWithAI,
-		Role:                 role,
-		Information:          info,
-		Message:              msg,
+		MyName:               msgInfo.MyName,
+		MyInfo:               msgInfo.MyInfo,
+		CharacterName:        msgInfo.CharacterName,
+		CharacterInfo:        msgInfo.CharacterInfo,
+		Message:              msgInfo.UserMsg,
+		WorldView:            msgInfo.WorldView,
 	}
 	jsonValue, _ := json.Marshal(msgJson)
 	message, err := client.Messages.New(context.TODO(), anthropic.MessageNewParams{
@@ -50,7 +56,7 @@ func ManageAI(role, info, msg string) string {
 			anthropic.NewUserMessage(anthropic.NewTextBlock(string(jsonValue))),
 		}),
 	})
-	allChatWithAI.ChatOfUser = append(allChatWithAI.ChatOfUser, msg)
+	allChatWithAI.ChatOfUser = append(allChatWithAI.ChatOfUser, msgInfo.UserMsg)
 	allChatWithAI.ChatOfAI = append(allChatWithAI.ChatOfAI, message.Content[0].Text)
 	fmt.Println(string(jsonValue))
 	checkErr(err, "")

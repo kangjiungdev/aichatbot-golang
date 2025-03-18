@@ -2,23 +2,32 @@ const chatForm = document.getElementById("chat-form")
 const chatInput = document.getElementById("chat-input")
 const chatBox = document.getElementById("chat-box")
 const chatEnterButton = document.getElementById("chat-enter-button")
-const roleInput = document.getElementById("role-input")
-const infoInput = document.getElementById("info-input")
+const characterNameInput = document.getElementById("character-name-input")
+const infoOfCharacterInput = document.getElementById("character-info-input")
+const worldViewInput = document.getElementById("world-view-input")
+const myNameInput = document.getElementById("my-name-input")
+const myInfoInput = document.getElementById("my-info-input")
 
 chatForm.addEventListener("submit", async(event) => {
     event.preventDefault();
 
-    const roleInputValue = roleInput.value.trim()
-    const infoInputValue = infoInput.value.trim()
+    const characterNameInputValue = characterNameInput.value.trim()
+    const infoOfCharacterInputValue = infoOfCharacterInput.value.trim()
     const chatInputValue = chatInput.value.trim()
+    const worldViewValue = worldViewInput.value.trim()
+    const myNameInputValue = myNameInput.value.trim()
+    const myInfoInputValue = myInfoInput.value.trim()
 
-    if (chatInputValue === "" || roleInputValue === "" || infoInputValue === "") {
+    if (chatInputValue === "" || characterNameInputValue === "" || infoOfCharacterInputValue === "" || myNameInputValue === "") {
         return
     }
 
-    roleInput.value = roleInputValue
-    infoInput.value = infoInputValue
+    characterNameInput.value = characterNameInputValue
+    infoOfCharacterInput.value = infoOfCharacterInputValue
     chatInput.value = chatInputValue
+    worldViewInput.value = worldViewValue
+    myNameInput.value = myNameInputValue
+    myInfoInput.value = myInfoInputValue
 
     createChatBlock(`User: ${chatInputValue}`, "User")
 
@@ -31,7 +40,7 @@ chatForm.addEventListener("submit", async(event) => {
                 body: chatFormForAI
             })
         const JsonOfResponse =  await ResponseOfAI.json()
-        createChatBlock(`${roleInputValue}(AI): ${JsonOfResponse["conversation"]}`, "AI")
+        createChatBlock(`${characterNameInputValue}(AI): ${JsonOfResponse["conversation"]}`, "AI")
         } catch(e) {
             console.error(e)
         }

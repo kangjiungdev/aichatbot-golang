@@ -7,6 +7,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type contentForAI struct {
+	MyName        string
+	MyInfo        string
+	CharacterName string
+	CharacterInfo string
+	WorldView     string
+	UserMsg       string
+}
+
 func ManagePage() {
 
 	r := gin.Default()
@@ -17,12 +26,15 @@ func ManagePage() {
 		c.HTML(http.StatusOK, "index.html", gin.H{})
 	})
 	r.POST("/getResponseAI", func(c *gin.Context) {
-		roleOfAI := c.DefaultPostForm("role-of-ai", "")
-		infoOfAI := c.DefaultPostForm("info-of-ai", "")
-		roleMessage := fmt.Sprintf("너는 %[1]s(이)다. %[1]s처럼 말해라. ", roleOfAI)
-		characterInfo := fmt.Sprintf("너의 정보: %[1]s", infoOfAI)
-		userMsg := c.DefaultPostForm("message", "")
-		responseOfAI := ManageAI(roleMessage, characterInfo, userMsg)
+		messageInformation := contentForAI{
+			MyName:        fmt.Sprintf("나의 이름은 '%[1]s'(이)다.", c.DefaultPostForm("my-name", "")),
+			MyInfo:        fmt.Sprintf("나의 정보: %[1]s", c.DefaultPostForm("my-info", "")),
+			CharacterName: fmt.Sprintf("너의 이름은 '%[1]s'(이)다.", c.DefaultPostForm("name-of-ai", "")),
+			CharacterInfo: fmt.Sprintf("너의 정보: %[1]s", c.DefaultPostForm("info-of-ai", "")),
+			WorldView:     fmt.Sprintf("세계관: %[1]s", c.DefaultPostForm("world-view", "")),
+			UserMsg:       c.DefaultPostForm("message", ""),
+		}
+		responseOfAI := ManageAI(messageInformation)
 		c.JSON(http.StatusOK, gin.H{
 			"conversation": responseOfAI, // action(캐릭터의 행동)도 따로 처리해야하는줄 알았는데 그냥 AI가 대화에서 **은 행동으로 처리해줌.
 		})
