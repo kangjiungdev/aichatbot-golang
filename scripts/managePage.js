@@ -30,8 +30,9 @@ window.addEventListener("load", async() => {
                     createChatBlock(chat.ai, "AI")
                 }
             });
+            createDeleteButton();
+            scrollToBottom();
         }
-        scrollToBottom();
 })
 
 chatForm.addEventListener("submit", async(event) => {
@@ -60,6 +61,7 @@ chatForm.addEventListener("submit", async(event) => {
 
     const chatFormForAI = new FormData(chatForm);
     chatInput.value=""
+    removeDeleteButton()
 
     try {
         const ResponseOfAI = await fetch("/getResponseAI", {
@@ -67,10 +69,11 @@ chatForm.addEventListener("submit", async(event) => {
                 body: chatFormForAI
             })
         const JsonOfResponse =  await ResponseOfAI.json()
-        createChatBlock(JsonOfResponse["conversation"], "AI")
-        } catch(e) {
-            console.error(e)
-        }
+        createChatBlock(JsonOfResponse["conversation"], "AI")   
+    } catch(e) {
+        console.error(e)
+    }
+    createDeleteButton()
 })
 
 function createChatBlock(chatContents, who) {
@@ -137,6 +140,34 @@ function storageChangeEvent(element, keyname) {
     element.addEventListener("change", function() {
         localStorage.setItem(keyname, this.value.trim())
     })
+}
+
+function createDeleteButton() {
+        const allUserChat = chatBox.querySelectorAll(".chat-block-div")
+        if (allUserChat[0]) {
+            const lastUserChat = allUserChat[allUserChat.length - 2]
+            const deleteButton = document.createElement("button")
+            deleteButton.innerText = "delete"
+            deleteButton.id = "delete-chat"
+            deleteButton.addEventListener("click", deleteReq)
+            lastUserChat.appendChild(deleteButton)
+        }
+}
+
+// 새 채팅을 쳐서 Delete 버튼을 원래 채팅에서 삭제해야 할 때만 사용
+function removeDeleteButton() {
+    const deleteBtn = document.getElementById("delete-chat")
+    if (deleteBtn) {
+        deleteBtn.remove()
+    }
+}
+
+function deleteReq() {
+    const allUserChat =  chatBox.querySelectorAll(".chat-block-div")
+    fetch("/deleteChat", {method: "POST"})
+    chatBox.lastElementChild.remove()
+    allUserChat[allUserChat.length - 2].remove()
+    createDeleteButton()
 }
 
 storageChangeEvent(myNameInput, "username")

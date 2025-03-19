@@ -50,5 +50,9 @@ func ManagePage() {
 			})
 		}
 	})
+	r.POST("/deleteChat", func(c *gin.Context) {
+		allChatWithAI.ChatOfUser = allChatWithAI.ChatOfUser[:len(allChatWithAI.ChatOfUser)-1]
+		allChatWithAI.ChatOfAI = allChatWithAI.ChatOfAI[:len(allChatWithAI.ChatOfAI)-1]
+	})
 	r.Run(":3000")
 }

@@ -109,3 +109,27 @@ body {
     display: block; /* 줄 바꿈 강제 적용 */
     margin-bottom: 1vw; /* 간격 추가 */
 }
+
+#delete-chat {
+    background-color: #444; /* 다크 그레이 배경 */
+    color: #fff; /* 흰색 텍스트 */
+    border: none;
+    border-radius: 0.4rem; /* 둥근 모서리 */
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-left: 1rem; /* 글씨와 버튼 사이 간격 (반응형) */
+}
+
+#delete-chat:hover {
+    background-color: #666666;
+}
+
+#delete-chat:active {
+    transform: scale(0.95);
+}

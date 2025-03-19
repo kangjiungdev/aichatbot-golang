@@ -56,9 +56,9 @@ func ManageAI(msgInfo contentForAI) string {
 			anthropic.NewUserMessage(anthropic.NewTextBlock(string(jsonValue))),
 		}),
 	})
+	checkErr(err, "AI API 통신 에러")
 	allChatWithAI.ChatOfUser = append(allChatWithAI.ChatOfUser, msgInfo.UserMsg)
 	allChatWithAI.ChatOfAI = append(allChatWithAI.ChatOfAI, message.Content[0].Text)
-	checkErr(err, "")
 	/*
 		현재 ai api 전부 다 구려서 역할같은거 설정이나 전 대화 내용 기억을 못함.
 		하나하나 json에 넣어서 같이 보내야됨. 대화 내용까지 전부 다 ㅋㅋㅋ
