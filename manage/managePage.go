@@ -27,11 +27,11 @@ func ManagePage() {
 	})
 	r.POST("/getResponseAI", func(c *gin.Context) {
 		messageInformation := contentForAI{
-			MyName:        fmt.Sprintf("나의 이름은 '%[1]s'(이)다.", c.DefaultPostForm("my-name", "")),
-			MyInfo:        fmt.Sprintf("나의 객관적인 정보: %[1]s", c.DefaultPostForm("my-info", "")),
-			CharacterName: fmt.Sprintf("너의 이름은 '%[1]s'(이)다.", c.DefaultPostForm("name-of-ai", "")),
-			CharacterInfo: fmt.Sprintf("너의 객관적인 정보: %[1]s", c.DefaultPostForm("info-of-ai", "")),
-			WorldView:     fmt.Sprintf("세계관: %[1]s", c.DefaultPostForm("world-view", "")),
+			MyName:        fmt.Sprintf("내 이름은 '%[1]s'(이)다.", c.DefaultPostForm("my-name", "")),
+			MyInfo:        fmt.Sprintf("내 객관적인 정보: %[1]s", c.DefaultPostForm("my-info", "")),
+			CharacterName: fmt.Sprintf("네 이름은 '%[1]s'(이)다.", c.DefaultPostForm("name-of-ai", "")),
+			CharacterInfo: fmt.Sprintf("네 객관적인 정보: %[1]s", c.DefaultPostForm("info-of-ai", "")),
+			WorldView:     fmt.Sprintf("세계관 설정: %[1]s", c.DefaultPostForm("world-view", "")),
 			UserMsg:       c.DefaultPostForm("message", ""),
 		}
 		responseOfAI := ManageAI(messageInformation)
