@@ -9,11 +9,26 @@
 <body>
     <div id="chat-box"></div>
     <form action="/getResponseAI" method="post" id="chat-form">
+        <div class="label-container">
+            <span class="required">*</span>
+            <label for="my-name-input">내 이름</label>
+        </div>
         <input type="text" name="my-name" id="my-name-input" class="chat-form-input" placeholder="캐릭터에게 내 이름을 알려주세요." autocomplete="off">
         <textarea type="text" name="my-info" id="my-info-input" class="chat-form-textarea" placeholder="캐릭터에게 나에 대해 알려주세요." autocomplete="off"></textarea>
         <textarea type="text" name="message" id="chat-input" class="chat-form-textarea" placeholder="대사를 입력하세요. 예) 안녕! 뭐해?" autocomplete='off' ></textarea>
+        <div class="label-container">
+            <span class="required">*</span>
+            <label for="my-name-input">캐릭터 이름</label>
+        </div>
         <input type="text" name="name-of-ai" id="character-name-input" class="chat-form-input" placeholder="캐릭터 이름을 입력해 주세요." autocomplete="off">
+        <div class="label-container">
+            <span class="required">*</span>
+            <label for="my-name-input">캐릭터 소개</label>
+        </div>
         <textarea type="text" name="info-of-ai" id="character-info-input" class="chat-form-textarea" placeholder="캐릭터의 소개를 입력해 주세요." autocomplete="off"></textarea>
+        <div class="label-container">
+            <label for="my-name-input">세계관</label>
+        </div>
         <textarea type="text" name="world-view" id="world-view-input" class="chat-form-textarea" placeholder="세계관을 입력해 주세요." autocomplete="off"></textarea>
         <button id="chat-enter-button">입력</button>
     </form>

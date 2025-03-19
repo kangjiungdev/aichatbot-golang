@@ -3,14 +3,16 @@ function scrollToBottom() {
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-chatEnterButton.addEventListener("mouseover", function() {
-    if(chatInput.value.trim() === "" || characterNameInput.value.trim() === "" || infoOfCharacterInput.value.trim() === "") {
-        this.style = "cursor: auto;"
-    } else {
-        this.style="background-color: #666666; cursor: pointer;"
-    }
-})
+function updateButtonState() {
+    const isActive = chatInput.value.trim() !== "" &&
+                     myNameInput.value.trim() !== "" &&
+                     characterNameInput.value.trim() !== "" &&
+                     infoOfCharacterInput.value.trim() !== "";
 
-chatEnterButton.addEventListener("mouseout", function() {
-    this.style = "background-color: #444;"
-})
+    chatEnterButton.classList.toggle("active", isActive);
+}
+
+// 이벤트 리스너 등록
+[chatInput, myNameInput, characterNameInput, infoOfCharacterInput].forEach(input => {
+    input.addEventListener("input", updateButtonState);
+});
